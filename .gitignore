@@ -1,0 +1,11 @@
+venv/
+postgres_data/
+.data/
+.env
+.env.dev
+.env.prod
+.env.test
+.vscode
+.idea
+__pychache__
+db.sqlite3

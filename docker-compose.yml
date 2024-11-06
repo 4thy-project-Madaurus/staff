@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  staff_backend:
+    build: .
+    container_name: django_backend
+    ports:
+      - "8000:8000"
+    depends_on: 
+      - staff_db
+      - staff_pdf
+    env_file:
+      - .env.prod
+    restart: unless-stopped
+
+
+  staff_db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: staff
+      POSTGRES_PASSWORD: staff
+      POSTGRES_DB: staff
+    ports:
+      - "9090:5432"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+  staff_pdf:
+    image: permitio/pdp-v2:latest
+    environment:
+      - PDP_API_KEY=permit_key_dyl2zhOIm2EXssDKP33JGbqGKKPiZarQjl0AcL7ZYvsYsLz2zFGDWcdRghccmR0EEJF5TS8c99g5ItDHl87alV
+      - PDP_DEBUG=True
+    ports:
+      - "7766:7000"
